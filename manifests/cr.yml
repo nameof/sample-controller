@@ -1,0 +1,8 @@
+apiVersion: nameof.github.com/v1
+kind: GithubInfo
+metadata:
+  name: nameof-in-github
+spec:
+  username: nameof
+  link: https://github.com/nameof
+  repoCount: 10

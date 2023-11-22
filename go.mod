@@ -2,10 +2,7 @@ module github.com/nameof/sample-controller
 
 go 1.19
 
-require (
-	k8s.io/apimachinery v0.28.3
-	k8s.io/sample-controller v0.28.3
-)
+require k8s.io/apimachinery v0.28.3
 
 require (
 	github.com/go-logr/logr v1.2.4 // indirect
@@ -18,6 +15,7 @@ require (
 	golang.org/x/text v0.13.0 // indirect
 	gopkg.in/inf.v0 v0.9.1 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
+	k8s.io/client-go v0.28.3 // indirect
 	k8s.io/klog/v2 v2.100.1 // indirect
 	k8s.io/utils v0.0.0-20230406110748-d93618cff8a2 // indirect
 	sigs.k8s.io/json v0.0.0-20221116044647-bc3834ca7abd // indirect

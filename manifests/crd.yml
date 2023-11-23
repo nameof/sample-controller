@@ -1,14 +1,14 @@
 apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
-  name: ginfos.nameof.github.com
+  name: githubinfos.nameof.github.com
 spec:
   group: nameof.github.com
   names:
     kind: GithubInfo
     listKind: GithubInfoList
-    plural: ginfos
-    singular: ginfo
+    plural: githubinfos
+    singular: githubinfos
   scope: Namespaced
   versions:
     - name: v1
@@ -33,6 +33,6 @@ spec:
                 - link
                 - repoCount
       additionalPrinterColumns:
-        - name: CR-Name
+        - name: Github-Username
           type: string
           jsonPath: .spec.username

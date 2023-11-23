@@ -2,6 +2,7 @@ apiVersion: nameof.github.com/v1
 kind: GithubInfo
 metadata:
   name: nameof-in-github
+  namespace: default
 spec:
   username: nameof
   link: https://github.com/nameof

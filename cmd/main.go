@@ -3,8 +3,10 @@ package main
 import (
 	"context"
 	"fmt"
+	"github.com/nameof/sample-controller/cmd/operator"
 	v1 "github.com/nameof/sample-controller/pkg/apis/nameof.github.com/v1"
 	"github.com/nameof/sample-controller/pkg/client/clientset/versioned"
+	"github.com/nameof/sample-controller/pkg/client/informers/externalversions"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/tools/clientcmd"
 	"time"
@@ -12,6 +14,11 @@ import (
 
 func main() {
 	clientset := createClient()
+
+	factory := externalversions.NewSharedInformerFactory(clientset, 0)
+	factory.Nameof().V1().GithubInfos().Informer().AddEventHandler(&operator.PrintHandler{})
+	factory.WaitForCacheSync(nil)
+	factory.Start(nil)
 
 	printall(clientset)
 

@@ -12,6 +12,8 @@ import (
 	"time"
 )
 
+type OperationFunc func(clientset *versioned.Clientset)
+
 func main() {
 	clientset := createClient()
 
@@ -25,6 +27,11 @@ func main() {
 	createOne(clientset)
 
 	printall(clientset)
+
+	var funcs []OperationFunc = []OperationFunc{printall, createOne}
+	for _, i := range funcs {
+		i(clientset)
+	}
 }
 
 func createOne(clientset *versioned.Clientset) {
@@ -68,4 +75,12 @@ func printall(clientset *versioned.Clientset) {
 	for index, item := range list.Items {
 		fmt.Printf("%d: GithubInfo(%s)\n", index+1, item.GetName())
 	}
+}
+
+func count(clientset *versioned.Clientset) int {
+	list, err := clientset.NameofV1().GithubInfos(metav1.NamespaceAll).List(context.Background(), metav1.ListOptions{})
+	if err != nil {
+		panic(err)
+	}
+	return len(list.Items)
 }

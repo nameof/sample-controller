@@ -2,28 +2,17 @@ package operator
 
 import (
 	"fmt"
+	"github.com/nameof/sample-controller/cmd/util"
 	v1 "github.com/nameof/sample-controller/pkg/apis/nameof.github.com/v1"
-	"github.com/nameof/sample-controller/pkg/client/clientset/versioned"
 	"k8s.io/apimachinery/pkg/api/errors"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	"k8s.io/client-go/tools/clientcmd"
 	"reflect"
 	"testing"
 	"time"
 )
 
 func createClient() *GenClientOperator {
-	config, err := clientcmd.BuildConfigFromFlags("", clientcmd.RecommendedHomeFile)
-	if err != nil {
-		panic(err)
-	}
-
-	clientset, err := versioned.NewForConfig(config)
-	if err != nil {
-		panic(err)
-	}
-
-	return NewGenClientOperator(clientset)
+	return NewGenClientOperator(util.CreateClientset())
 }
 
 func Test_Create_Ok(t *testing.T) {

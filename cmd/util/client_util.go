@@ -1,8 +1,12 @@
 package util
 
 import (
+	"fmt"
+	v1 "github.com/nameof/sample-controller/pkg/apis/nameof.github.com/v1"
 	"github.com/nameof/sample-controller/pkg/client/clientset/versioned"
+	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/tools/clientcmd"
+	"time"
 )
 
 func CreateClientset() *versioned.Clientset {
@@ -16,4 +20,17 @@ func CreateClientset() *versioned.Clientset {
 		panic(err)
 	}
 	return clientset
+}
+
+func BuildInfo() *v1.GithubInfo {
+	return &v1.GithubInfo{
+		ObjectMeta: metav1.ObjectMeta{
+			Name: fmt.Sprintf("%s%d", "nameof-in-github", time.Now().UnixMilli()),
+		},
+		Spec: v1.GithubInfoSpec{
+			Username:  "nameof",
+			Link:      "https://github.com/nameof",
+			RepoCount: 10,
+		},
+	}
 }

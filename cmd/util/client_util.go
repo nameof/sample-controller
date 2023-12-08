@@ -24,6 +24,10 @@ func CreateClientset() *versioned.Clientset {
 
 func BuildInfo() *v1.GithubInfo {
 	return &v1.GithubInfo{
+		TypeMeta: metav1.TypeMeta{
+			APIVersion: "nameof.github.com/v1",
+			Kind:       "GithubInfo",
+		},
 		ObjectMeta: metav1.ObjectMeta{
 			Name: fmt.Sprintf("%s%d", "nameof-in-github", time.Now().UnixMilli()),
 		},

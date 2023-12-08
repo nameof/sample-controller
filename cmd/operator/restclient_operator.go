@@ -6,7 +6,6 @@ import (
 	v1 "github.com/nameof/sample-controller/pkg/apis/nameof.github.com/v1"
 	v12 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
-	"k8s.io/apimachinery/pkg/runtime/serializer"
 	"k8s.io/client-go/kubernetes/scheme"
 	"k8s.io/client-go/rest"
 	"k8s.io/client-go/tools/clientcmd"
@@ -28,9 +27,9 @@ func NewRestClientOperator() *RestClientOperator {
 
 	crdConfig := *config
 	crdConfig.ContentConfig.GroupVersion = &schema.GroupVersion{Group: "nameof.github.com", Version: "v1"}
+	crdConfig.GroupVersion = crdConfig.ContentConfig.GroupVersion
 	crdConfig.APIPath = "/apis"
-	crdConfig.NegotiatedSerializer = serializer.NewCodecFactory(scheme.Scheme)
-	crdConfig.UserAgent = rest.DefaultKubernetesUserAgent()
+	crdConfig.NegotiatedSerializer = scheme.Codecs.WithoutConversion()
 
 	client, err := rest.UnversionedRESTClientFor(&crdConfig)
 	if err != nil {

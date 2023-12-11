@@ -8,7 +8,7 @@ import (
 )
 
 func createClient() *GenClientOperator {
-	return NewGenClientOperator(util.CreateClientset())
+	return NewGenClientOperator()
 }
 
 func Test_Create_Ok(t *testing.T) {

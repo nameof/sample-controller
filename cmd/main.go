@@ -5,11 +5,9 @@ import (
 	"fmt"
 	"github.com/nameof/sample-controller/cmd/operator"
 	"github.com/nameof/sample-controller/cmd/util"
-	v1 "github.com/nameof/sample-controller/pkg/apis/nameof.github.com/v1"
 	"github.com/nameof/sample-controller/pkg/client/clientset/versioned"
 	"github.com/nameof/sample-controller/pkg/client/informers/externalversions"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	"time"
 )
 
 type OperationFunc func(clientset *versioned.Clientset)
@@ -22,18 +20,8 @@ func main() {
 }
 
 func createOne(clientset *versioned.Clientset) {
-	info := v1.GithubInfo{
-		ObjectMeta: metav1.ObjectMeta{
-			Name: fmt.Sprintf("%s%d", "nameof-in-github", time.Now().UnixMilli()),
-		},
-		Spec: v1.GithubInfoSpec{
-			Username:  "nameof",
-			Link:      "https://github.com/nameof",
-			RepoCount: 10,
-		},
-	}
-
-	_, err := clientset.NameofV1().GithubInfos(metav1.NamespaceDefault).Create(context.Background(), &info, metav1.CreateOptions{})
+	info := util.BuildInfo()
+	_, err := clientset.NameofV1().GithubInfos(metav1.NamespaceDefault).Create(context.Background(), info, metav1.CreateOptions{})
 	if err != nil {
 		panic(err)
 	}

@@ -6,14 +6,24 @@ import (
 	v1 "github.com/nameof/sample-controller/pkg/apis/nameof.github.com/v1"
 	"github.com/nameof/sample-controller/pkg/client/clientset/versioned"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	"k8s.io/client-go/tools/clientcmd"
 )
 
 type GenClientOperator struct {
 	client *versioned.Clientset
 }
 
-func NewGenClientOperator(client *versioned.Clientset) *GenClientOperator {
-	return &GenClientOperator{client: client}
+func NewGenClientOperator() *GenClientOperator {
+	config, err := clientcmd.BuildConfigFromFlags("", clientcmd.RecommendedHomeFile)
+	if err != nil {
+		panic(err)
+	}
+
+	clientset, err := versioned.NewForConfig(config)
+	if err != nil {
+		panic(err)
+	}
+	return &GenClientOperator{client: clientset}
 }
 
 func (g *GenClientOperator) Create(info *v1.GithubInfo) error {

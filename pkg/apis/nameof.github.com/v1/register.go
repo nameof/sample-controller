@@ -7,8 +7,9 @@ import (
 )
 
 const (
-	Group   = "nameof.github.com"
-	Version = "v1"
+	Group        = "nameof.github.com"
+	Version      = "v1"
+	ResourceName = "githubinfos"
 )
 
 // SchemeGroupVersion is group version used to register these objects

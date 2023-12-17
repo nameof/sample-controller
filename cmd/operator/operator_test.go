@@ -44,6 +44,15 @@ func Test_Create_Fail(t *testing.T) {
 	}
 }
 
+func Test_PrintAll(t *testing.T) {
+	tests := prepare()
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			tt.operator.PrintAll()
+		})
+	}
+}
+
 func prepare() []struct {
 	name     string
 	operator GithubInfoOperator

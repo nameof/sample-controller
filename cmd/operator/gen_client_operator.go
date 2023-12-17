@@ -2,7 +2,6 @@ package operator
 
 import (
 	"context"
-	"fmt"
 	v1 "github.com/nameof/sample-controller/pkg/apis/nameof.github.com/v1"
 	"github.com/nameof/sample-controller/pkg/client/clientset/versioned"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
@@ -38,7 +37,7 @@ func (g *GenClientOperator) PrintAll() {
 	}
 
 	for index, item := range list.Items {
-		fmt.Printf("%d: GithubInfo(%s)\n", index+1, item.GetName())
+		Print(index, &item)
 	}
 }
 

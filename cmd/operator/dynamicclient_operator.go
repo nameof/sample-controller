@@ -3,7 +3,6 @@ package operator
 import (
 	"context"
 	"encoding/json"
-	"fmt"
 	v1 "github.com/nameof/sample-controller/pkg/apis/nameof.github.com/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/apis/meta/v1/unstructured"
@@ -60,7 +59,7 @@ func (d *DynamicClientOperator) PrintAll() {
 	}
 
 	for index, item := range list.Items {
-		fmt.Printf("%d: GithubInfo(%s)\n", index+1, item.GetName())
+		Print(index, &item)
 	}
 }
 

@@ -5,17 +5,21 @@ import (
 	v1 "github.com/nameof/sample-controller/pkg/apis/nameof.github.com/v1"
 	"github.com/nameof/sample-controller/pkg/client/clientset/versioned"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	"k8s.io/client-go/rest"
 	"k8s.io/client-go/tools/clientcmd"
 	"time"
 )
 
-func CreateClientset() *versioned.Clientset {
+func GetConfig() *rest.Config {
 	config, err := clientcmd.BuildConfigFromFlags("", clientcmd.RecommendedHomeFile)
 	if err != nil {
 		panic(err)
 	}
+	return config
+}
 
-	clientset, err := versioned.NewForConfig(config)
+func CreateClientset() *versioned.Clientset {
+	clientset, err := versioned.NewForConfig(GetConfig())
 	if err != nil {
 		panic(err)
 	}

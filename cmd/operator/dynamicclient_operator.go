@@ -3,12 +3,12 @@ package operator
 import (
 	"context"
 	"encoding/json"
+	"github.com/nameof/sample-controller/cmd/util"
 	v1 "github.com/nameof/sample-controller/pkg/apis/nameof.github.com/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/apis/meta/v1/unstructured"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 	"k8s.io/client-go/dynamic"
-	"k8s.io/client-go/tools/clientcmd"
 )
 
 type DynamicClientOperator struct {
@@ -17,12 +17,7 @@ type DynamicClientOperator struct {
 }
 
 func NewDynamicClientOperator() *DynamicClientOperator {
-	config, err := clientcmd.BuildConfigFromFlags("", clientcmd.RecommendedHomeFile)
-	if err != nil {
-		panic(err)
-	}
-
-	dynamicClient, err := dynamic.NewForConfig(config)
+	dynamicClient, err := dynamic.NewForConfig(util.GetConfig())
 	if err != nil {
 		panic(err)
 	}

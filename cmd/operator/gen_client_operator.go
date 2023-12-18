@@ -2,10 +2,10 @@ package operator
 
 import (
 	"context"
+	"github.com/nameof/sample-controller/cmd/util"
 	v1 "github.com/nameof/sample-controller/pkg/apis/nameof.github.com/v1"
 	"github.com/nameof/sample-controller/pkg/client/clientset/versioned"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	"k8s.io/client-go/tools/clientcmd"
 )
 
 type GenClientOperator struct {
@@ -13,12 +13,7 @@ type GenClientOperator struct {
 }
 
 func NewGenClientOperator() *GenClientOperator {
-	config, err := clientcmd.BuildConfigFromFlags("", clientcmd.RecommendedHomeFile)
-	if err != nil {
-		panic(err)
-	}
-
-	clientset, err := versioned.NewForConfig(config)
+	clientset, err := versioned.NewForConfig(util.GetConfig())
 	if err != nil {
 		panic(err)
 	}

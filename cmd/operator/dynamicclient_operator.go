@@ -2,7 +2,6 @@ package operator
 
 import (
 	"context"
-	"encoding/json"
 	"github.com/nameof/sample-controller/cmd/util"
 	v1 "github.com/nameof/sample-controller/pkg/apis/nameof.github.com/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
@@ -64,13 +63,8 @@ func (d *DynamicClientOperator) GetByName(name string) (*v1.GithubInfo, error) {
 		return nil, err
 	}
 
-	marshal, err := json.Marshal(get)
-	if err != nil {
-		return nil, err
-	}
-
 	info := v1.GithubInfo{}
-	err = json.Unmarshal(marshal, &info)
+	err = ConverterFunc(get, &info)
 	if err != nil {
 		return nil, err
 	}

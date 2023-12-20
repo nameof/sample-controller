@@ -11,11 +11,19 @@ import (
 )
 
 type DynamicClientOperator struct {
-	client *dynamic.DynamicClient
-	gvr    schema.GroupVersionResource
+	client        *dynamic.DynamicClient
+	gvr           schema.GroupVersionResource
+	converterFunc ConverterFuncType
 }
 
 func NewDynamicClientOperator() *DynamicClientOperator {
+	return NewDynamicClientOperator2(DefaultConverter)
+}
+
+func NewDynamicClientOperator2(convert ConverterFuncType) *DynamicClientOperator {
+	if convert == nil {
+		convert = DefaultConverter
+	}
 	dynamicClient, err := dynamic.NewForConfig(util.GetConfig())
 	if err != nil {
 		panic(err)
@@ -24,7 +32,9 @@ func NewDynamicClientOperator() *DynamicClientOperator {
 		Group:    v1.Group,
 		Version:  v1.Version,
 		Resource: v1.ResourceName,
-	}}
+	},
+		converterFunc: convert,
+	}
 }
 
 func (d *DynamicClientOperator) Create(info *v1.GithubInfo) error {
@@ -64,7 +74,7 @@ func (d *DynamicClientOperator) GetByName(name string) (*v1.GithubInfo, error) {
 	}
 
 	info := v1.GithubInfo{}
-	err = ConverterFunc(get, &info)
+	err = d.converterFunc(get, &info)
 	if err != nil {
 		return nil, err
 	}

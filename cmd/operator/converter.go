@@ -8,7 +8,9 @@ import (
 	"reflect"
 )
 
-var ConverterFunc func(data *unstructured.Unstructured, result any) error = MyConverter
+type ConverterFuncType func(data *unstructured.Unstructured, result any) error
+
+var DefaultConverter ConverterFuncType = ConvertToGithubInfo
 
 func ConvertToGithubInfo(data *unstructured.Unstructured, result any) error {
 	return runtime.DefaultUnstructuredConverter.FromUnstructured(data.UnstructuredContent(), result)

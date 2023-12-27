@@ -51,3 +51,12 @@ func (r *RestClientOperator) GetByName(name string) (*v1.GithubInfo, error) {
 	err := r.client.Get().Namespace(v12.NamespaceDefault).Resource(v1.ResourceName).Name(name).Do(context.TODO()).Into(&info)
 	return &info, err
 }
+
+func (r *RestClientOperator) Count() int {
+	list := v1.GithubInfoList{}
+	err := r.client.Get().Namespace(v12.NamespaceDefault).Resource(v1.ResourceName).Do(context.TODO()).Into(&list)
+	if err != nil {
+		return 0
+	}
+	return len(list.Items)
+}

@@ -9,6 +9,7 @@ type GithubInfoOperator interface {
 	Create(info *v1.GithubInfo) error
 	PrintAll()
 	GetByName(name string) (*v1.GithubInfo, error)
+	Count() int
 }
 
 type ResourceNameGetter interface {

@@ -53,6 +53,20 @@ func Test_PrintAll(t *testing.T) {
 	}
 }
 
+func Test_Count(t *testing.T) {
+	tests := prepare()
+	counts := make([]int, len(tests))
+	for i, tt := range tests {
+		counts[i] = tt.operator.Count()
+	}
+
+	for i := 1; i < len(counts); i++ {
+		if counts[i] != counts[0] {
+			t.Errorf("count error %d %d", counts[i], counts[0])
+		}
+	}
+}
+
 func prepare() []struct {
 	name     string
 	operator GithubInfoOperator

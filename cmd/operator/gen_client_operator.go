@@ -39,3 +39,11 @@ func (g *GenClientOperator) PrintAll() {
 func (g *GenClientOperator) GetByName(name string) (*v1.GithubInfo, error) {
 	return g.client.NameofV1().GithubInfos(metav1.NamespaceDefault).Get(context.Background(), name, metav1.GetOptions{})
 }
+
+func (g *GenClientOperator) Count() int {
+	list, err := g.client.NameofV1().GithubInfos(metav1.NamespaceDefault).List(context.Background(), metav1.ListOptions{})
+	if err != nil {
+		return 0
+	}
+	return len(list.Items)
+}

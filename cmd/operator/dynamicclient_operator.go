@@ -80,3 +80,11 @@ func (d *DynamicClientOperator) GetByName(name string) (*v1.GithubInfo, error) {
 	}
 	return &info, nil
 }
+
+func (d *DynamicClientOperator) Count() int {
+	list, err := d.client.Resource(d.gvr).Namespace(metav1.NamespaceDefault).List(context.TODO(), metav1.ListOptions{})
+	if err != nil {
+		return 0
+	}
+	return len(list.Items)
+}
